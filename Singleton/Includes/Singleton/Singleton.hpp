@@ -53,11 +53,11 @@ namespace AO
 				static inline Derived *CreateInstance(Args &&...args)
 				{
 					void *data = static_cast<void *>(GetData());
-					std::call_once(Flag, [&](void (*destroyer)(void)) -> void
+					std::call_once(Flag, [&](void (*destroyer)(void), Args &&...args) -> void
 					{
 						new (data) Derived(std::forward<Args>(args)...);
 						std::atexit(destroyer);
-					}, &Singleton::DestroyInstance);
+					}, &Singleton::DestroyInstance, std::forward<Args>(args)...);
 					return reinterpret_cast<Derived *>(data);
 				}
 
