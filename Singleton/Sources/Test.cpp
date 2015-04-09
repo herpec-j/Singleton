@@ -13,7 +13,7 @@ template <std::size_t N>
 class Class final : public AO::Singleton::Singleton < Class<N> >
 {
 private:
-	friend Singleton::Access;
+	friend typename Class::Access;
 
 	// Constructors
 	Class(void)

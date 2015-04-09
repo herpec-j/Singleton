@@ -61,7 +61,7 @@ namespace AO
 					return reinterpret_cast<Derived *>(data);
 				}
 
-				static void DestroyInstance(void)
+				static inline void DestroyInstance(void)
 				{
 					reinterpret_cast<Derived *>(GetData())->~Derived();
 				}
