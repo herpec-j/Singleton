@@ -27,7 +27,7 @@ source_group(Includes FILES ${Singleton_HDRS})
 set(Singleton_Private_HDRS
 	${PROJECT_SOURCE_DIR}/Singleton/Includes/Singleton/Private/SpinLock.hpp)
 
-source_group(Includes FILES ${Singleton_Private_HDRS})
+source_group(Includes\\Private FILES ${Singleton_Private_HDRS})
 
 set(HDRS
 	${Singleton_HDRS}
