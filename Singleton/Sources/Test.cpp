@@ -41,7 +41,7 @@ private:
 		__letters.pop();
 		if (__letters.empty())
 		{
-			std::cout << std::flush;
+			std::cout << std::endl;
 		}
 	}
 	
