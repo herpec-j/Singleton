@@ -24,8 +24,14 @@ set(Singleton_HDRS
 
 source_group(Includes FILES ${Singleton_HDRS})
 
+set(Singleton_Private_HDRS
+	${PROJECT_SOURCE_DIR}/Singleton/Includes/Singleton/Private/SpinLock.hpp)
+
+source_group(Includes FILES ${Singleton_Private_HDRS})
+
 set(HDRS
-	${MemoryPool_HDRS})
+	${Singleton_HDRS}
+	${Singleton_Private_HDRS})
 	
 set(SRCS
 	${PROJECT_SOURCE_DIR}/Singleton/Sources/Test.cpp)

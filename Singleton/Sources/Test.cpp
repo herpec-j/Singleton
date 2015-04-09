@@ -102,13 +102,13 @@ void Class<8>::initialize(void) const
 
 int main(int argc, char *argv[])
 {
-	Class<1>::GetInstance();
-	Class<2>::GetInstance();
-	Class<3>::GetInstance();
-	Class<4>::GetInstance();
-	Class<5>::GetInstance();
-	Class<6>::GetInstance();
-	Class<7>::GetInstance();
-	Class<8>::GetInstance();
+  std::cout << Class<1>::GetInstancePointer() << std::endl;
+  std::cout << Class<2>::GetInstancePointer() << std::endl;
+  std::cout << Class<3>::GetInstancePointer() << std::endl;
+  std::cout << Class<4>::GetInstancePointer() << std::endl;
+  std::cout << Class<5>::GetInstancePointer() << std::endl;
+  std::cout << Class<6>::GetInstancePointer() << std::endl;
+  std::cout << Class<7>::GetInstancePointer() << std::endl;
+  std::cout << Class<8>::GetInstancePointer() << std::endl;
 	return EXIT_SUCCESS;
 }

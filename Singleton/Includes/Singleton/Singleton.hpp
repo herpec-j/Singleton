@@ -2,6 +2,8 @@
 #include <utility>
 #include <cstdlib>
 
+#include "Singleton/Private/SpinLock.hpp"
+
 namespace AO
 {
 	namespace Singleton
@@ -45,20 +47,27 @@ namespace AO
 				virtual ~Singleton(void) = default;
 
 			private:
-				// Static Attributes
-				static std::once_flag Flag;
+			  // Static Attributes
+			  static Derived *InstancePointer;
+
+			  static Private::SpinLock Lock;
 
 				// Static Methods
 				template <typename... Args>
 				static inline Derived *CreateInstance(Args &&...args)
 				{
-					void *data = static_cast<void *>(GetData());
-					std::call_once(Flag, [&](void (*destroyer)(void), Args &&...args) -> void
+				  if (InstancePointer == nullptr)
+				    {
+				      std::lock_guard<decltype(Lock)> lock(Lock);
+				      if (InstancePointer == nullptr)
 					{
-						new (data) Derived(std::forward<Args>(args)...);
-						std::atexit(destroyer);
-					}, &Singleton::DestroyInstance, std::forward<Args>(args)...);
-					return reinterpret_cast<Derived *>(data);
+					  void *data = static_cast<void *>(GetData());
+					  new (data) Derived(std::forward<Args>(args)...);
+					  InstancePointer = reinterpret_cast<Derived *>(data);
+					  std::atexit(&Singleton::DestroyInstance);
+					}
+				    }
+				  return InstancePointer;
 				}
 
 				static inline void DestroyInstance(void)
@@ -73,9 +82,11 @@ namespace AO
 				}
 			};
 
-			// Static Attributes
-			template <typename Derived>
-			std::once_flag Singleton<Derived>::Flag;
+		  template <class Derived>
+		  Derived *Singleton<Derived>::InstancePointer = nullptr;
+
+		  template <class Derived>
+		  Private::SpinLock Singleton<Derived>::Lock;
 		}
 	}
 }
